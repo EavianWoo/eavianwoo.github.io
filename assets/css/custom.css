@@ -1,0 +1,43 @@
+/* publication abstract */
+
+.max-w-prose {
+  max-width: 720px; /* 与图像相同 */
+  margin: 0 auto;   /* 居中 */
+}
+
+/* single-column */
+article .max-w-prose.grid {
+  grid-template-columns: 1fr;
+}
+/* double-column */
+@media (min-width: 768px) {
+  article .max-w-prose.grid {
+    grid-template-columns: 130px auto;
+  }
+}
+
+/*!* grid single-column up & down *!*/
+/*.max-w-prose.grid {*/
+/*  display: flex;*/
+/*  flex-direction: column;*/
+/*}*/
+
+.font-bold.text-2xl + div {
+  max-width: 900px;
+  /*margin: 0 auto;*/
+  line-height: 1.6;
+  text-align: justify;
+}
+/** {*/
+/*  outline: 1px solid red;*/
+/*}*/
+
+.li-cite-author span {
+  text-decoration: none;
+  transition: text-decoration-color 0.2s ease;
+}
+
+.li-cite-author span:hover {
+  text-decoration: underline;
+  text-decoration-color: #2563eb; /* 类似 Tailwind 的 text-blue-600 */
+}

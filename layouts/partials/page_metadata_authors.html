@@ -1,0 +1,44 @@
+
+
+{{ $authors_fm := .Params.authors }}
+{{ $first := true }}
+
+{{ range $i, $author := $authors_fm }}
+    {{ if not $first }}, {{ end }}
+    {{ $first = false }}
+
+    {{ $name := "" }}
+    {{ $url := "" }}
+    {{ $highlight_name := false }}
+
+    {{ if isset $author "name" }}
+        {{/* 对象形式 */}}
+        {{ $name = $author.name }}
+        {{ $url = $author.url | default "" }}
+    {{ else }}
+        {{/* taxonomy term */}}
+        {{ $name = $author }}
+        {{ $term := index ($.Site.Taxonomies.authors) (lower $author) }}
+        {{ if $term }}
+            {{ $url = $term.Page.RelPermalink }}
+            {{ $name = $term.Page.LinkTitle | default $name }}
+
+            {{ $highlight_name = $term.Page.Params.highlight_name | default false }}
+        {{ end }}
+
+        {{/* process admin */}}
+        {{ if eq (lower $name) "admin" }}
+            {{ $name = $.Site.Params.author | default "Admin" }}
+            {{ $url = $.Site.Params.author_url | default "#" }}
+        {{ end }}
+    {{ end }}
+
+<!--    {{ warnf "Authors name: %s" $highlight_name }}-->
+    <span {{ if $highlight_name }}class="font-bold"{{end}}>
+        {{ if $url }}
+          <a href="{{ $url | safeURL }}" class="underline hover:text-blue-600">{{ $name }}</a>
+        {{ else }}
+          {{ $name }}
+        {{ end }}
+    </span>
+{{ end }}
